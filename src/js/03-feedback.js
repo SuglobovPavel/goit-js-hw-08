@@ -19,8 +19,8 @@ if(localDataObj && localDataObj.message){
 }
 
 function userInputText(e){
-   localDataObj[e.currentTarget.name] = e.currentTarget.value;
-   throttle(saveDataInput(localDataObj), 500);
+   localDataObj[e.target.name] = e.target.value;
+   saveDataInput(localDataObj);
 }
 
 function saveDataInput(dataObj){
@@ -29,11 +29,11 @@ function saveDataInput(dataObj){
 
 function submitForm(e){
    e.preventDefault();
-   e.currentTarget.reset();
+   e.target.reset();
    console.log(localDataObj);
    localStorage.removeItem("feedback-form-state");
 }
 
-inputEmailRef.addEventListener("input", userInputText);
-textareaRef.addEventListener("input", userInputText);
+inputEmailRef.addEventListener("input", throttle(userInputText, 500));
+textareaRef.addEventListener("input", throttle(userInputText, 500));
 formRef.addEventListener("submit", submitForm);
