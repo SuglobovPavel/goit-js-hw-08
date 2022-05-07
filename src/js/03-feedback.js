@@ -4,6 +4,7 @@ const formRef = document.querySelector(".feedback-form");
 const inputEmailRef = document.querySelector("input[name=email]");
 const textareaRef = document.querySelector("textarea[name=message]");
 const serve = JSON.parse(localStorage.getItem("feedback-form-state"));
+const messageError = document.querySelector(".message");
 
 let localDataObj = {};
 localDataObj = {
@@ -29,6 +30,11 @@ function saveDataInput(dataObj){
 
 function submitForm(e){
    e.preventDefault();
+   if(!(e.srcElement.email.value && e.srcElement.message.value) ){
+      messageError.textContent = "Все поля обязательны для заполнения!";
+      return false;
+   }
+   messageError.textContent = "";
    e.target.reset();
    console.log(localDataObj);
    localStorage.removeItem("feedback-form-state");
